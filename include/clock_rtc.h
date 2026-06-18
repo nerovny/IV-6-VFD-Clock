@@ -9,8 +9,8 @@
 
 extern bool IS_TIME_UPDATED;
 
-RTC_HandleTypeDef hrtc = {0};
-RTC_TimeTypeDef sTime = {0};
-RTC_DateTypeDef sDate = {0};
+extern RTC_HandleTypeDef hrtc;
+extern RTC_TimeTypeDef sTime;
+extern RTC_DateTypeDef sDate;
 
 void MX_RTC_Init(void);

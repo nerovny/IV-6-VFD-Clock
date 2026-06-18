@@ -13,7 +13,7 @@
 #include "stm32f1xx_hal_rtc_ex.h"
 #include "clock_pins.h"
 #include "clock_bcd.h"
-#include "clock_rtc.h"
+#include "clock_rtc.h" 
 
 void SystemClock_Config(void);
 void _Error_Handler(const char* file, int line);
@@ -25,73 +25,13 @@ int main(void) {
 	HAL_Delay(100);
 	MX_RTC_Init();
 
+	DigitBCDPrint(12, 34, 95);
+	GPIOA->BSRR = DIGIT_BCD_PIN_COLON;
 
 	while (1) {
 		if (IS_TIME_UPDATED) {
 			HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
 			HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
-
-			/* Testing: 65:43:21
-			DigitBCDReset();
-			for (int i = 1; i <= 6; i++) {
-				GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
-				HAL_Delay(1);
-				GPIOA->BRR = DIGIT_BYTE_CLEAN;
-				GPIOA->BSRR = (uint8_t)i;
-				GPIOA->BRR = DIGIT_BCD_PIN_CLK;
-				HAL_Delay(1);
-			}
-			*/
-
-			DigitBCDReset();
-			// Seconds
-			GPIOA->BRR = DIGIT_BYTE_CLEAN;
-			HAL_Delay(1);
-			GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
-			GPIOA->BSRR = sTime.Seconds & 0xF;
-			HAL_Delay(1);
-			GPIOA->BRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
-			GPIOA->BRR = DIGIT_BYTE_CLEAN;
-			GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
-			GPIOA->BSRR = (sTime.Seconds >> 4) & 0xF;
-			HAL_Delay(1);
-			GPIOA->BRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
-
-			// Minutes
-			GPIOA->BRR = DIGIT_BYTE_CLEAN;
-			GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
-			GPIOA->BSRR = sTime.Minutes & 0xF;
-			HAL_Delay(1);
-			GPIOA->BRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
-			GPIOA->BRR = DIGIT_BYTE_CLEAN;
-			GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
-			GPIOA->BSRR = (sTime.Minutes >> 4) & 0xF;
-			HAL_Delay(1);
-			GPIOA->BRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
-
-			// Hours
-			GPIOA->BRR = DIGIT_BYTE_CLEAN;
-			GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
-			GPIOA->BSRR = sTime.Hours & 0xF;
-			HAL_Delay(1);
-			GPIOA->BRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
-			GPIOA->BRR = DIGIT_BYTE_CLEAN;
-			GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
-			GPIOA->BSRR = (sTime.Hours >> 4) & 0xF;
-			HAL_Delay(1);
-			GPIOA->BRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
 			
 			HAL_GPIO_TogglePin(DIGIT_BCD_PORT, DIGIT_BCD_PIN_COLON);
 			IS_TIME_UPDATED = false;

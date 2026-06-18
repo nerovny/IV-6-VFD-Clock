@@ -6,6 +6,12 @@
 
 #include "clock_rtc.h"
 
+bool IS_TIME_UPDATED = false;
+
+RTC_HandleTypeDef hrtc = {0};
+RTC_TimeTypeDef sTime = {0};
+RTC_DateTypeDef sDate = {0};
+
 void MX_RTC_Init(void);
 
 
@@ -52,9 +58,6 @@ void MX_RTC_Init(void)
 	HAL_PWR_EnableBkUpAccess();
 	HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
 	HAL_PWR_DisableBkUpAccess();
-
-    // Reset the time interrupt flag
-    IS_TIME_UPDATED = false;
 }
 
 extern "C" void RTC_IRQHandler(void) {
