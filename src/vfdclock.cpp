@@ -27,12 +27,20 @@ int main(void) {
 
 	DigitBCDPrint(12, 34, 95);
 	GPIOA->BSRR = DIGIT_BCD_PIN_COLON;
+	HAL_Delay(10000);
+
+	HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
+	HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
+
+	DigitBCDPrint(sTime.Hours, sTime.Minutes, sTime.Seconds);
+	HAL_GPIO_TogglePin(DIGIT_BCD_PORT, DIGIT_BCD_PIN_COLON);
 
 	while (1) {
 		if (IS_TIME_UPDATED) {
 			HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
 			HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
-			
+
+			DigitBCDPrint(sTime.Hours, sTime.Minutes, sTime.Seconds);
 			HAL_GPIO_TogglePin(DIGIT_BCD_PORT, DIGIT_BCD_PIN_COLON);
 			IS_TIME_UPDATED = false;
 		}
@@ -41,13 +49,15 @@ int main(void) {
 }
 
 void SystemClock_Config(void) {
+
+	__HAL_RCC_PWR_CLK_ENABLE();
+
 	RCC_OscInitTypeDef RCC_OscInitStruct;
 	RCC_ClkInitTypeDef RCC_ClkInitStruct;
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE | RCC_OSCILLATORTYPE_LSI;
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE | RCC_OSCILLATORTYPE_LSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
 	RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
-	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-	RCC_OscInitStruct.LSIState = RCC_LSI_ON;
+	RCC_OscInitStruct.LSIState = RCC_LSE_ON;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
 	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
 	RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
@@ -72,7 +82,7 @@ void SystemClock_Config(void) {
 	// HAL_Delay(1) is 100ns
 	HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/10000);
 	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
-	HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
+	HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
 
 void _Error_Handler(const char* file, int line) {
@@ -81,4 +91,5 @@ void _Error_Handler(const char* file, int line) {
 
 extern "C" void SysTick_Handler(void) {
 	HAL_IncTick();
+	HAL_SYSTICK_IRQHandler();
 }
