@@ -4,7 +4,8 @@
   * @author   A. Nerovny
   * @brief    Under construction
   ******************************************************************************
-  */
+  */// TODO: 	LM2733YMFX/NOPB - 40В
+	// 			LMR64010XMF - 40v
 
 #include "stm32f1xx_hal.h"
 #include "stm32f1xx_hal_gpio.h"
@@ -12,8 +13,11 @@
 #include "stm32f1xx_hal_rtc.h"
 #include "stm32f1xx_hal_rtc_ex.h"
 #include "clock_pins.h"
-#include "clock_bcd.h"
-#include "clock_rtc.h" 
+#include "clock_bcd.h" 
+#include "ds1302.h"
+#include "delay.h"
+
+const char* DaysName[] = {0, "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"};
 
 void SystemClock_Config(void);
 void _Error_Handler(const char* file, int line);
@@ -22,28 +26,40 @@ int main(void) {
 	HAL_Init();
 	SystemClock_Config();
 	DigitPins_Init();
-	HAL_Delay(100);
-	MX_RTC_Init();
+	HAL_Delay(10);
 
-	DigitBCDPrint(12, 34, 95);
+	DS1302_HandelTypeDef rtc = {
+        .CE_Pin = {RTC_PORT, RTC_PIN_RESET},
+        .IO_Pin = {RTC_PORT, RTC_PIN_DATA},
+		.SCLK_Pin = {RTC_PORT, RTC_PIN_CLK}
+    };
+
+	// Create a timerecord to set the datetime
+    DS1302_TimeRecord datetime = {
+        .sec = 10,
+        .min = 23,
+        .hour = {.hour=11, .meridiem=NONE}, // Set meridiem to NONE if using 24 hrs clock
+        .date = 22,
+        .month = 8,
+        .year = 24,
+        .day = TUE
+    };
+	RTCPins_Init();
+	ds1302_init(&rtc);
+	ds1302_setDateTime(&rtc, datetime);
+
+	DigitBCDPrint(88, 88, 88);
 	GPIOA->BSRR = DIGIT_BCD_PIN_COLON;
-	HAL_Delay(10000);
-
-	HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-	HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
-
-	DigitBCDPrint(sTime.Hours, sTime.Minutes, sTime.Seconds);
-	HAL_GPIO_TogglePin(DIGIT_BCD_PORT, DIGIT_BCD_PIN_COLON);
+	HAL_Delay(500);
 
 	while (1) {
-		if (IS_TIME_UPDATED) {
-			HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-			HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
-
-			DigitBCDPrint(sTime.Hours, sTime.Minutes, sTime.Seconds);
+		DS1302_TimeRecord now = ds1302_getDateTime(&rtc);
+		if (now.sec != datetime.sec) {
+			datetime = ds1302_getDateTime(&rtc);
+			DigitBCDPrint(datetime.hour.hour, datetime.min, datetime.sec);
 			HAL_GPIO_TogglePin(DIGIT_BCD_PORT, DIGIT_BCD_PIN_COLON);
-			IS_TIME_UPDATED = false;
 		}
+		HAL_Delay(10);
 	}
 	return 0;
 }
@@ -79,8 +95,8 @@ void SystemClock_Config(void) {
 	}
 
 	//Configure the SysTick frequency, clock source and interrupt priority.
-	// HAL_Delay(1) is 100ns
-	HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/10000);
+	// HAL_Delay(1) is 1ms
+	HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
 	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
 	HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }

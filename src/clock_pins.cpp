@@ -8,10 +8,10 @@
 #include "clock_pins.h"
 
 void DigitPins_Init(void);
+void RTCPins_Init(void);
 
 void DigitPins_Init(void) {
 	__HAL_RCC_GPIOA_CLK_ENABLE();
-
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 	GPIO_InitStruct.Pin = DIGIT_BCD_PIN_A | DIGIT_BCD_PIN_B | 
 						DIGIT_BCD_PIN_C | DIGIT_BCD_PIN_D | 
@@ -20,4 +20,8 @@ void DigitPins_Init(void) {
 	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(DIGIT_BCD_PORT, &GPIO_InitStruct);
+}
+
+void RTCPins_Init(void) {
+	__HAL_RCC_GPIOB_CLK_ENABLE();
 }

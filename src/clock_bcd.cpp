@@ -7,27 +7,28 @@
 #include "stm32f1xx_hal_gpio.h"
 #include "clock_pins.h"
 #include "clock_bcd.h"
+#include "delay.h"
 
 void DigitBCDReset(void) {
 	GPIOA->BSRR = DIGIT_BCD_PIN_RESET;
-	HAL_Delay(1);
+	Delay_us(100);
 	GPIOA->BRR = DIGIT_BCD_PIN_RESET;
 	for (int i = 0; i <= 8; i++) {
 		GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
-		HAL_Delay(1);
+		Delay_us(100);
 		GPIOA->BRR = DIGIT_BCD_PIN_CLK;
-		HAL_Delay(1);
+		Delay_us(100);
 	}
 }
 
 void DigitBCDZero(void) {
 	for (int i = 1; i <= 6; i++) {
 			GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
+			Delay_us(100);
 			GPIOA->BRR = DIGIT_BYTE_CLEAN;
-			HAL_Delay(1);
+			Delay_us(100);
 			GPIOA->BRR = DIGIT_BCD_PIN_CLK;
-			HAL_Delay(1);
+			Delay_us(100);
 		}
 }
 
@@ -44,19 +45,19 @@ void DigitBCDPrint(unsigned int num_high, unsigned int num_middle, unsigned int 
 
 void DigitBCDPrintByte(uint8_t bcd_byte) {
 	GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
-	HAL_Delay(1);
+	Delay_us(100);
 	GPIOA->BRR = DIGIT_BYTE_CLEAN;
-	HAL_Delay(1);
+	Delay_us(100);
 	GPIOA->BSRR = bcd_byte & 0x0F; //extract lower nibble by the 0x00001111 mask
-	HAL_Delay(1);
+	Delay_us(100);
 	GPIOA->BRR = DIGIT_BCD_PIN_CLK;
-	HAL_Delay(1);
+	Delay_us(100);
 	GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
-	HAL_Delay(1);
+	Delay_us(100);
 	GPIOA->BRR = DIGIT_BYTE_CLEAN;
-	HAL_Delay(1);
+	Delay_us(100);
 	GPIOA->BSRR = (bcd_byte >> 4) & 0x0F; //extract higher nibble
-	HAL_Delay(1);
+	Delay_us(100);
 	GPIOA->BRR = DIGIT_BCD_PIN_CLK;
-	HAL_Delay(1);
+	Delay_us(100);
 }
