@@ -651,7 +651,7 @@
         "uuid": "098fcf4c-f67c-4aff-b2c0-93c692070d55"
       }
     ],
-    "used_designators": "R60",
+    "used_designators": "R60,U14,#PWR61-62",
     "variants": []
   },
   "sheets": [

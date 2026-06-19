@@ -1,7 +1,4 @@
-/*
-*   @file   clock_bcd.h
-*   @brief  BCD handling definitions and functions header file
-*/
+//BCD handling definitions and functions header file
 
 #include <stdint.h>
 
@@ -19,3 +16,6 @@ void DigitBCDPrint(unsigned int num_high, unsigned int num_middle, unsigned int 
 
 // Prints the two-digit BCD byte at the current position 
 void DigitBCDPrintByte(uint8_t bcd_byte);
+
+// Do the 1..9 startup counter
+void DigitBCDStartupRoll(void);

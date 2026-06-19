@@ -61,3 +61,12 @@ void DigitBCDPrintByte(uint8_t bcd_byte) {
 	GPIOA->BRR = DIGIT_BCD_PIN_CLK;
 	Delay_us(100);
 }
+
+void DigitBCDStartupRoll(void) {
+	DigitBCDReset();
+	GPIOA->BSRR = DIGIT_BCD_PIN_COLON;
+	for (int i = 0; i <= 99; i++) {
+		DigitBCDPrint(i, i, i);
+		HAL_Delay(10);
+	}
+}

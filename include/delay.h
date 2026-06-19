@@ -1,6 +1,4 @@
-//
 // Microseconds delay function using DWT
-//
 
 #include "stm32f1xx_hal.h"
 

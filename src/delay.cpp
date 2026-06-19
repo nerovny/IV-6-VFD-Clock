@@ -13,6 +13,5 @@ void Delay_us(uint32_t us) {
     // SystemCoreClock содержит частоту процессора в Гц
     uint32_t ticks_per_us = SystemCoreClock / 1000000;
     uint32_t delay_ticks = us * ticks_per_us;
-    
     while ((DWT->CYCCNT - start_tick) < delay_ticks);
 }

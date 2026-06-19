@@ -1,11 +1,10 @@
-/**
-  ******************************************************************************
+/********************************************************************************
   * @file     VFD Clock
   * @author   A. Nerovny
   * @brief    Under construction
-  ******************************************************************************
-  */// TODO: 	LM2733YMFX/NOPB - 40В
-	// 			LMR64010XMF - 40v
+  *******************************************************************************/
+// TODO: 	LM2733YMFX/NOPB - 40В
+// 			LMR64010XMF - 40v
 
 #include "stm32f1xx_hal.h"
 #include "stm32f1xx_hal_gpio.h"
@@ -34,7 +33,7 @@ int main(void) {
 		.SCLK_Pin = {RTC_PORT, RTC_PIN_CLK}
     };
 
-	// Create a timerecord to set the datetime
+	// ONLY FOR TESTING PURPOSES // Set the initial date and time
     DS1302_TimeRecord datetime = {
         .sec = 10,
         .min = 23,
@@ -44,13 +43,11 @@ int main(void) {
         .year = 24,
         .day = TUE
     };
+
 	RTCPins_Init();
 	ds1302_init(&rtc);
 	ds1302_setDateTime(&rtc, datetime);
-
-	DigitBCDPrint(88, 88, 88);
-	GPIOA->BSRR = DIGIT_BCD_PIN_COLON;
-	HAL_Delay(500);
+	DigitBCDStartupRoll();
 
 	while (1) {
 		DS1302_TimeRecord now = ds1302_getDateTime(&rtc);

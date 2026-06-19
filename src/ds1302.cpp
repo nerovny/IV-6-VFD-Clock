@@ -1,3 +1,9 @@
+/********************************************************************************
+  * @file     DS1302-RTC
+  * @author   Anurag Kumar Singh "anurag3301"
+  * @brief    Easy to use library to use DS1302 RTC module written for STM32CubeHAL
+  *******************************************************************************/
+
 #include "stm32f1xx_hal.h"
 #include "ds1302.h"
 #include "delay.h"
