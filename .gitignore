@@ -6,4 +6,4 @@
 .vscode/settings.json
 compile_commands.json
 hardware/.history
-.lck
+*.lck
