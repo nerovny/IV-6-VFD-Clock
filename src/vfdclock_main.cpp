@@ -49,6 +49,7 @@ int main(void) {
 	ds1302_setDateTime(&rtc, datetime);
 	DigitBCDStartupRoll();
 
+	DigitBCDReset();
 	while (1) {
 		DS1302_TimeRecord now = ds1302_getDateTime(&rtc);
 		if (now.sec != datetime.sec) {
