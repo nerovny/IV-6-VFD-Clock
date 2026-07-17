@@ -27,5 +27,16 @@
 #define RTC_PIN_DATA            GPIO_PIN_1
 #define RTC_PIN_CLK             GPIO_PIN_10
 
+// Rotary encoder pins
+#define ENCODER_PORT            GPIOB
+#define ENCODER_PIN_BTN         GPIO_PIN_11
+#define ENCODER_PIN_ENA         GPIO_PIN_12
+#define ENCODER_PIN_ENB         GPIO_PIN_13
+
+// Buzzer pin
+#define BUZZER_PORT             GPIOA
+#define BUZZER_PIN              GPIO_PIN_8
+
 void DigitPins_Init(void);
 void RTCPins_Init(void);
+void BuzzerPins_Init(void);

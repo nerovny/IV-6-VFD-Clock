@@ -8,6 +8,7 @@
 #include "clock_pins.h"
 #include "clock_bcd.h"
 #include "delay.h"
+#include "buzzer.h"
 
 void DigitBCDReset(void) {
 	GPIOA->BSRR = DIGIT_BCD_PIN_RESET;
@@ -74,6 +75,7 @@ void DigitBCDStartupRoll(void) {
 	DigitBCDReset();
 	GPIOA->BSRR = DIGIT_BCD_PIN_COLON;
 	for (int i = 0; i <= 99; i++) {
+		BuzzerUpdate();
 		DigitBCDPrint(i, i, i);
 		HAL_Delay(DIGIT_STARTUP_DELAY);
 	}

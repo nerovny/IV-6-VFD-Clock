@@ -25,3 +25,14 @@ void DigitPins_Init(void) {
 void RTCPins_Init(void) {
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 }
+
+void BuzzerPins_Init(void) {
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	
+	// Настройка пина PA8 как альтернативной функции (TIM1_CH1)
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    GPIO_InitStruct.Pin = GPIO_PIN_8;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+}

@@ -11,10 +11,12 @@
 #include "stm32f1xx_hal_rcc.h"
 #include "stm32f1xx_hal_rtc.h"
 #include "stm32f1xx_hal_rtc_ex.h"
+#include "stm32f1xx_hal_tim.h"
 #include "clock_pins.h"
 #include "clock_bcd.h" 
 #include "ds1302.h"
 #include "delay.h"
+#include "buzzer.h"
 
 const char* DaysName[] = {0, "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"};
 
@@ -25,6 +27,8 @@ int main(void) {
 	HAL_Init();
 	SystemClock_Config();
 	DigitPins_Init();
+	BuzzerPins_Init();
+	BuzzerInit();
 	HAL_Delay(10);
 
 	DS1302_HandelTypeDef rtc = {
@@ -35,9 +39,9 @@ int main(void) {
 
 	// ONLY FOR TESTING PURPOSES // Set the initial date and time
     DS1302_TimeRecord datetime = {
-        .sec = 10,
-        .min = 23,
-        .hour = {.hour=11, .meridiem=NONE}, // Set meridiem to NONE if using 24 hrs clock
+        .sec = 0,
+        .min = 2,
+        .hour = {.hour=14, .meridiem=NONE}, // Set meridiem to NONE if using 24 hrs clock
         .date = 22,
         .month = 8,
         .year = 24,
@@ -47,10 +51,13 @@ int main(void) {
 	RTCPins_Init();
 	ds1302_init(&rtc);
 	ds1302_setDateTime(&rtc, datetime);
+	BuzzerStartDuration(1100, 10, 50);
 	DigitBCDStartupRoll();
-
 	DigitBCDReset();
-	while (1) {
+
+	while (1) { // MAIN LOOP
+		BuzzerUpdate();
+
 		DS1302_TimeRecord now = ds1302_getDateTime(&rtc);
 		if (now.sec != datetime.sec) {
 			datetime = ds1302_getDateTime(&rtc);
@@ -58,7 +65,7 @@ int main(void) {
 			HAL_GPIO_TogglePin(DIGIT_BCD_PORT, DIGIT_BCD_PIN_COLON);
 		}
 		HAL_Delay(10);
-	}
+	} // MAIN LOOP
 	return 0;
 }
 
