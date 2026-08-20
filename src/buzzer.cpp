@@ -36,6 +36,12 @@ void MX_TIM1_Init(void) {
 
 void BuzzerInit(void) {
 	MX_TIM1_Init();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    GPIO_InitStruct.Pin = GPIO_PIN_8;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	buzstate = BUZZER_STATE_IDLE;
 }
 

@@ -17,8 +17,20 @@
 #include "ds1302.h"
 #include "delay.h"
 #include "buzzer.h"
+#include "encoder.h"
 
 const char* DaysName[] = {0, "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"};
+
+typedef enum {
+	CLOCK_STATE_NORMAL, //Default
+	CLOCK_STATE_ENCODER_TEST 
+} Clock_State_t;
+
+Clock_State_t STATE = CLOCK_STATE_ENCODER_TEST;
+
+uint8_t ClockTestCounter = 0;
+
+Encoder_t Encoder = {0};
 
 void SystemClock_Config(void);
 void _Error_Handler(const char* file, int line);
@@ -27,7 +39,6 @@ int main(void) {
 	HAL_Init();
 	SystemClock_Config();
 	DigitPins_Init();
-	BuzzerPins_Init();
 	BuzzerInit();
 	HAL_Delay(10);
 
@@ -48,24 +59,48 @@ int main(void) {
         .day = TUE
     };
 
+	Encoder_Init(&Encoder, ENCODER_PORT, ENCODER_PIN_ENA, ENCODER_PORT, ENCODER_PIN_ENB);
+
 	RTCPins_Init();
 	ds1302_init(&rtc);
 	ds1302_setDateTime(&rtc, datetime);
-	BuzzerStartDuration(1100, 10, 50);
+	BuzzerStartDuration(1100, 50, 100);
 	DigitBCDStartupRoll();
 	DigitBCDReset();
+	BuzzerStartDuration(1700, 50, 200);
 
 	while (1) { // MAIN LOOP
 		BuzzerUpdate();
 
-		DS1302_TimeRecord now = ds1302_getDateTime(&rtc);
-		if (now.sec != datetime.sec) {
-			datetime = ds1302_getDateTime(&rtc);
-			DigitBCDPrint(datetime.hour.hour, datetime.min, datetime.sec);
-			HAL_GPIO_TogglePin(DIGIT_BCD_PORT, DIGIT_BCD_PIN_COLON);
+		switch (STATE) {
+			case CLOCK_STATE_NORMAL: {
+				DS1302_TimeRecord now = ds1302_getDateTime(&rtc);
+				if (now.sec != datetime.sec) {
+					datetime = ds1302_getDateTime(&rtc);
+					DigitBCDPrint(datetime.hour.hour, datetime.min, datetime.sec);
+					HAL_GPIO_TogglePin(DIGIT_BCD_PORT, DIGIT_BCD_PIN_COLON);
+				}
+				break;
+			}
+			case CLOCK_STATE_ENCODER_TEST: {
+				Encoder_Rotation_t Rotation;
+				Rotation = Encoder_Get(&Encoder);
+				if (Rotation == Encoder_Rotate_Increment) {
+					if (ClockTestCounter < 99) {
+						ClockTestCounter += 1;
+					}
+				} else if (Rotation == Encoder_Rotate_Decrement) {
+					if (ClockTestCounter > 0) {
+						ClockTestCounter -= 1;
+					} else (ClockTestCounter = 0);
+				}
+				DigitBCDPrint(0, 0, ClockTestCounter);
+				break;
+			}
+			default:
+				break;
 		}
-		HAL_Delay(10);
-	} // MAIN LOOP
+	} // MAIN LOOP END
 	return 0;
 }
 
@@ -108,6 +143,17 @@ void SystemClock_Config(void) {
 
 void _Error_Handler(const char* file, int line) {
 	//Error occured so we did nothing
+}
+
+extern "C" void EXTI15_10_IRQHandler(void) {
+  	HAL_GPIO_EXTI_IRQHandler(ENCODER_PIN_ENA);
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	__HAL_GPIO_EXTI_CLEAR_IT(ENCODER_PIN_ENA);
+  	if (GPIO_Pin == ENCODER_PIN_ENA) {
+    	Encoder_Process(&Encoder);
+  	}
 }
 
 extern "C" void SysTick_Handler(void) {

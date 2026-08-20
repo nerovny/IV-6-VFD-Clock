@@ -17,7 +17,7 @@
 #define	DIGIT_BCD_PIN_COLON		GPIO_PIN_5 //A5
 #define DIGIT_BCD_PIN_RESET		GPIO_PIN_6 //A6
 #define DIGIT_PWM_PORT			GPIOB
-#define DIGIT_PWM_PIN			GPIO_PIN_9 //B9
+#define DIGIT_PWM_PIN			GPIO_PIN_9 // TIM4 CH4
 
 
 // DS1302 module pins
@@ -27,16 +27,15 @@
 #define RTC_PIN_DATA            GPIO_PIN_1
 #define RTC_PIN_CLK             GPIO_PIN_10
 
-// Rotary encoder pins
-#define ENCODER_PORT            GPIOB
-#define ENCODER_PIN_BTN         GPIO_PIN_11
-#define ENCODER_PIN_ENA         GPIO_PIN_12
-#define ENCODER_PIN_ENB         GPIO_PIN_13
-
-// Buzzer pin
-#define BUZZER_PORT             GPIOA
-#define BUZZER_PIN              GPIO_PIN_8
+// Rotary encoder pins on the TIM1
+#define ENCODER_PORT            GPIOB       // TODO: GPIOA
+#define ENCODER_PIN_BTN         GPIO_PIN_11 // GPIO_PIN_10
+#define ENCODER_PIN_ENA         GPIO_PIN_12 // GPIO_PIN_8
+#define ENCODER_PIN_ENB         GPIO_PIN_13 // GPIO_PIN_9
+ 
+// Buzzer pin on the TIM4 CH3
+#define BUZZER_PORT             GPIOA       // TODO: GPIOB
+#define BUZZER_PIN              GPIO_PIN_8  // GPIO_PIN_8
 
 void DigitPins_Init(void);
 void RTCPins_Init(void);
-void BuzzerPins_Init(void);
