@@ -21,16 +21,14 @@ typedef struct {
     Encoder_Mode_t Mode;             //Rotary encoder mode
     GPIO_TypeDef* GPIO_A;       //Pointer to GPIO port for encoder A pin
     GPIO_TypeDef* GPIO_B;       //Pointer to GPIO port for encoder B pin
+    GPIO_TypeDef* GPIO_BTN;
     uint16_t GPIO_PIN_A;        //GPIO pin for rotary encoder A pin
     uint16_t GPIO_PIN_B;        //GPIO pin for rotary encoder B pin
+    uint16_t GPIO_PIN_BTN;
 } Encoder_t;
 
 //Initiate the *data rotary encoder
-void Encoder_Init(Encoder_t* data, 
-                GPIO_TypeDef* GPIO_A_Port, 
-                uint16_t GPIO_A_Pin, 
-                GPIO_TypeDef* GPIO_B_Port, 
-                uint16_t GPIO_B_Pin);
+void Encoder_Init(Encoder_t* data);
 
 //Set the normal or reversed direction encoder mode
 void Encoder_SetMode(Encoder_t* data, Encoder_Mode_t mode);

@@ -20,6 +20,13 @@ void DigitPins_Init(void) {
 	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(DIGIT_BCD_PORT, &GPIO_InitStruct);
+
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	GPIO_InitStruct.Pin = DIGIT_PWM_PIN;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(DIGIT_PWM_PORT, &GPIO_InitStruct);
 }
 
 void RTCPins_Init(void) {

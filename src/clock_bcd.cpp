@@ -10,6 +10,10 @@
 #include "delay.h"
 #include "buzzer.h"
 
+unsigned int num_high_buf = 0;
+unsigned int num_mid_buf = 0;
+unsigned int num_low_buf = 0;
+
 void DigitBCDReset(void) {
 	GPIOA->BSRR = DIGIT_BCD_PIN_RESET;
 	Delay_us(DIGIT_DELAY_US);
@@ -36,20 +40,41 @@ void DigitBCDZero(void) {
 			GPIOA->BSRR = DIGIT_BCD_PIN_CLK;
 			Delay_us(DIGIT_DELAY_US);
 			GPIOA->BRR = DIGIT_BYTE_CLEAN;
-			Delay_us(DIGIT_DELAY_US);
+			Delay_us(DIGIT_DELAY_US*2);
 			GPIOA->BRR = DIGIT_BCD_PIN_CLK;
 			Delay_us(DIGIT_DELAY_US);
 		}
 }
 
 void DigitBCDPrint(unsigned int num_high, unsigned int num_middle, unsigned int num_low) {
-	uint8_t high_byte = INT_TO_BCD_8BIT(num_high);
-	uint8_t mid_byte = INT_TO_BCD_8BIT(num_middle);
-	uint8_t low_byte = INT_TO_BCD_8BIT(num_low);
-	DigitBCDPrintByte(low_byte);
-	DigitBCDPrintByte(mid_byte);
-	DigitBCDPrintByte(high_byte);
-	DigitBCDEOL(6);
+	uint8_t high_byte;
+	uint8_t mid_byte;
+	uint8_t low_byte;
+
+	if ((num_high != num_high_buf) || (num_middle != num_mid_buf) || (num_low != num_low_buf)){
+		num_high_buf = num_high;
+		num_mid_buf = num_middle;
+		num_low_buf = num_low;
+		if (num_high < 100){
+			high_byte = INT_TO_BCD_8BIT(num_high);
+		} else high_byte = 0xFF;
+		
+		if (num_middle < 100){
+			mid_byte = INT_TO_BCD_8BIT(num_middle);
+		} else mid_byte = 0xFF;
+		
+		if (num_low < 100){
+			low_byte = INT_TO_BCD_8BIT(num_low);
+		} else low_byte = 0xFF;
+
+		DIGIT_PWM_PORT->BRR = DIGIT_PWM_PIN;
+		Delay_us(DIGIT_DELAY_US*20);
+		DIGIT_PWM_PORT->BSRR = DIGIT_PWM_PIN;
+		DigitBCDPrintByte(low_byte);
+		DigitBCDPrintByte(mid_byte);
+		DigitBCDPrintByte(high_byte);
+		DigitBCDEOL(6);
+	}
 }
 
 void DigitBCDPrintByte(uint8_t bcd_byte) {

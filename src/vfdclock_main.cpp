@@ -30,7 +30,17 @@ Clock_State_t STATE = CLOCK_STATE_ENCODER_TEST;
 
 uint8_t ClockTestCounter = 0;
 
-Encoder_t Encoder = {0};
+Encoder_t Encoder = {
+	RE_Count : 0,
+	Rotation : Encoder_Rotate_Nothing, 
+	Mode : Encoder_Mode_Normal,
+	GPIO_A : ENCODER_PORT,
+	GPIO_B : ENCODER_PORT,
+	GPIO_BTN : ENCODER_PORT,
+	GPIO_PIN_A : ENCODER_PIN_ENA,
+	GPIO_PIN_B : ENCODER_PIN_ENB,
+	GPIO_PIN_BTN : ENCODER_PIN_BTN
+	};
 
 void SystemClock_Config(void);
 void _Error_Handler(const char* file, int line);
@@ -59,7 +69,7 @@ int main(void) {
         .day = TUE
     };
 
-	Encoder_Init(&Encoder, ENCODER_PORT, ENCODER_PIN_ENA, ENCODER_PORT, ENCODER_PIN_ENB);
+	Encoder_Init(&Encoder);
 
 	RTCPins_Init();
 	ds1302_init(&rtc);
@@ -94,7 +104,7 @@ int main(void) {
 						ClockTestCounter -= 1;
 					} else (ClockTestCounter = 0);
 				}
-				DigitBCDPrint(0, 0, ClockTestCounter);
+				DigitBCDPrint(100, 100, ClockTestCounter);
 				break;
 			}
 			default:
