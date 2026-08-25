@@ -17,9 +17,8 @@ void Encoder_Init(Encoder_t* data) {
 	HAL_GPIO_Init(data->GPIO_B, &GPIO_InitStruct);
 
     GPIO_InitStruct.Pin = data->GPIO_PIN_BTN;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(data->GPIO_BTN, &GPIO_InitStruct);
 
     // Enable and set EXTI15_10 Interrupt in the NVIC

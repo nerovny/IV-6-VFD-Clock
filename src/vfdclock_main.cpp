@@ -23,12 +23,24 @@ const char* DaysName[] = {0, "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"};
 
 typedef enum {
 	CLOCK_STATE_NORMAL, //Default
-	CLOCK_STATE_ENCODER_TEST 
+	CLOCK_STATE_ENCODER_TEST,
+	CLOCK_STATE_SET_HOUR,
+	CLOCK_STATE_SET_MINUTE,
+	CLOCK_STATE_SET_SECOND 
 } Clock_State_t;
 
-Clock_State_t STATE = CLOCK_STATE_ENCODER_TEST;
+typedef enum {
+	BUTTON_IDLE,
+	BUTTON_PRESSED
+} Button_State_t;
+
+Clock_State_t STATE = CLOCK_STATE_NORMAL;
+Button_State_t BUTTON_STATE = BUTTON_IDLE;
 
 uint8_t ClockTestCounter = 0;
+uint8_t ClockSetHour = 0;
+uint8_t ClockSetMinute = 0;
+uint8_t ClockSetSecond = 0;
 
 Encoder_t Encoder = {
 	RE_Count : 0,
@@ -73,7 +85,7 @@ int main(void) {
 
 	RTCPins_Init();
 	ds1302_init(&rtc);
-	ds1302_setDateTime(&rtc, datetime);
+	//ds1302_setDateTime(&rtc, datetime);
 	BuzzerStartDuration(1100, 50, 100);
 	DigitBCDStartupRoll();
 	DigitBCDReset();
@@ -90,6 +102,14 @@ int main(void) {
 					DigitBCDPrint(datetime.hour.hour, datetime.min, datetime.sec);
 					HAL_GPIO_TogglePin(DIGIT_BCD_PORT, DIGIT_BCD_PIN_COLON);
 				}
+				if (BUTTON_STATE == BUTTON_PRESSED) {
+					BUTTON_STATE = BUTTON_IDLE;
+					STATE = CLOCK_STATE_SET_HOUR;
+					datetime = ds1302_getDateTime(&rtc);
+					ClockSetHour = datetime.hour.hour;
+					ClockSetMinute = datetime.min;
+					ClockSetSecond = datetime.sec;
+				}
 				break;
 			}
 			case CLOCK_STATE_ENCODER_TEST: {
@@ -105,6 +125,79 @@ int main(void) {
 					} else (ClockTestCounter = 0);
 				}
 				DigitBCDPrint(100, 100, ClockTestCounter);
+				break;
+			}
+			case CLOCK_STATE_SET_HOUR: {
+				Encoder_Rotation_t Rotation;
+				Rotation = Encoder_Get(&Encoder);
+				if (Rotation == Encoder_Rotate_Increment) {
+					if (ClockSetHour < 23) {
+						ClockSetHour += 1;
+					}
+				} else if (Rotation == Encoder_Rotate_Decrement) {
+					if (ClockSetHour > 0) {
+						ClockSetHour -= 1;
+					} else (ClockSetHour = 0);
+				}
+				DigitBCDPrint(ClockSetHour, 100, 100);
+
+				if (BUTTON_STATE == BUTTON_PRESSED) {
+					BUTTON_STATE = BUTTON_IDLE;
+					STATE = CLOCK_STATE_SET_MINUTE;
+					break;
+				}
+				break;
+			}
+			case CLOCK_STATE_SET_MINUTE: {
+				Encoder_Rotation_t Rotation;
+				Rotation = Encoder_Get(&Encoder);
+				if (Rotation == Encoder_Rotate_Increment) {
+					if (ClockSetMinute < 59) {
+						ClockSetMinute += 1;
+					}
+				} else if (Rotation == Encoder_Rotate_Decrement) {
+					if (ClockSetMinute > 0) {
+						ClockSetMinute -= 1;
+					} else (ClockSetMinute = 0);
+				}
+				DigitBCDPrint(ClockSetHour, ClockSetMinute, 100);
+
+				if (BUTTON_STATE == BUTTON_PRESSED) {
+					BUTTON_STATE = BUTTON_IDLE;
+					STATE = CLOCK_STATE_SET_SECOND;
+					break;
+				}
+				break;
+			}
+			case CLOCK_STATE_SET_SECOND: {
+				Encoder_Rotation_t Rotation;
+				Rotation = Encoder_Get(&Encoder);
+				if (Rotation == Encoder_Rotate_Increment) {
+					if (ClockSetSecond < 59) {
+						ClockSetSecond += 1;
+					}
+				} else if (Rotation == Encoder_Rotate_Decrement) {
+					if (ClockSetSecond > 0) {
+						ClockSetSecond -= 1;
+					} else (ClockSetSecond = 0);
+				}
+				DigitBCDPrint(ClockSetHour, ClockSetMinute, ClockSetSecond);
+
+				if (BUTTON_STATE == BUTTON_PRESSED) {
+					BUTTON_STATE = BUTTON_IDLE;
+					STATE = CLOCK_STATE_NORMAL;
+					datetime = {
+        				.sec = ClockSetSecond,
+        				.min = ClockSetMinute,
+        				.hour = {.hour=ClockSetHour, .meridiem=NONE}, // Set meridiem to NONE if using 24 hrs clock
+        				.date = 22,
+        				.month = 8,
+        				.year = 24,
+        				.day = TUE
+    				};
+					ds1302_setDateTime(&rtc, datetime);
+					break;
+				}
 				break;
 			}
 			default:
@@ -157,13 +250,18 @@ void _Error_Handler(const char* file, int line) {
 
 extern "C" void EXTI15_10_IRQHandler(void) {
   	HAL_GPIO_EXTI_IRQHandler(ENCODER_PIN_ENA);
+	HAL_GPIO_EXTI_IRQHandler(ENCODER_PIN_BTN);
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	__HAL_GPIO_EXTI_CLEAR_IT(ENCODER_PIN_ENA);
+	__HAL_GPIO_EXTI_CLEAR_IT(ENCODER_PIN_BTN);
   	if (GPIO_Pin == ENCODER_PIN_ENA) {
     	Encoder_Process(&Encoder);
   	}
+	if (GPIO_Pin == ENCODER_PIN_BTN) {
+		BUTTON_STATE = BUTTON_PRESSED;
+	}
 }
 
 extern "C" void SysTick_Handler(void) {
