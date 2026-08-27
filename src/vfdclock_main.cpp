@@ -91,6 +91,9 @@ int main(void) {
 	DigitBCDReset();
 	BuzzerStartDuration(1700, 50, 200);
 
+	//force the initial button state
+	BUTTON_STATE = BUTTON_IDLE;
+
 	while (1) { // MAIN LOOP
 		BuzzerUpdate();
 
@@ -109,6 +112,7 @@ int main(void) {
 					ClockSetHour = datetime.hour.hour;
 					ClockSetMinute = datetime.min;
 					ClockSetSecond = datetime.sec;
+					break;
 				}
 				break;
 			}
