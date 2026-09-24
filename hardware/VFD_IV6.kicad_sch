@@ -1224,6 +1224,130 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector:TestPoint_Alt"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.762)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "TP"
+				(at 0 6.858 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TestPoint_Alt"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "test point (alternative shape)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "test point tp"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Pin* Test*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "TestPoint_Alt_0_1"
+				(polyline
+					(pts
+						(xy 0 2.54) (xy -0.762 3.302) (xy 0 4.064) (xy 0.762 3.302) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "TestPoint_Alt_1_1"
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Connector:USB_C_Receptacle_PowerOnly_6P"
 			(pin_names
 				(offset 1.016)
@@ -9209,6 +9333,31 @@
 		)
 		(uuid "7f4644d1-76b0-4a0f-b421-32a554d7dde6")
 	)
+	(text "github.com/nerovny/IV-6-VFD-Clock"
+		(exclude_from_sim no)
+		(at 48.006 28.448 0)
+		(effects
+			(font
+				(face "ГОСТ тип А")
+				(size 3.2 3.2)
+				(thickness 0.254)
+				(bold yes)
+			)
+		)
+		(uuid "8367a735-b21c-4abd-8960-560ed2aa143e")
+	)
+	(text "ИВ-6 VFD Digital Clock"
+		(exclude_from_sim no)
+		(at 48.26 21.336 0)
+		(effects
+			(font
+				(face "ГОСТ тип А")
+				(size 5 5)
+				(bold yes)
+			)
+		)
+		(uuid "865fe593-1a40-4fcd-aea4-aec40429bf55")
+	)
 	(text "Dallas RTC"
 		(exclude_from_sim no)
 		(at 85.598 189.738 0)
@@ -9247,6 +9396,32 @@
 			(justify left)
 		)
 		(uuid "93a99e53-30ed-4f87-9b46-69575964d29f")
+	)
+	(text "A.Nerovny"
+		(exclude_from_sim no)
+		(at 25.146 33.528 0)
+		(effects
+			(font
+				(face "ГОСТ тип А")
+				(size 3.2 3.2)
+				(thickness 0.254)
+				(bold yes)
+			)
+		)
+		(uuid "a18b5aec-fb41-40b3-8f4b-d7a2952101d9")
+	)
+	(text "2026"
+		(exclude_from_sim no)
+		(at 75.184 33.782 0)
+		(effects
+			(font
+				(face "ГОСТ тип А")
+				(size 3.2 3.2)
+				(thickness 0.254)
+				(bold yes)
+			)
+		)
+		(uuid "b1b03924-4063-4ece-8fbb-a8b74c4ac0e0")
 	)
 	(text "Connectors"
 		(exclude_from_sim no)
@@ -9448,6 +9623,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "3fbf6ee6-006d-4492-bb31-f2f6ae388389")
+	)
+	(junction
+		(at 106.68 101.6)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "46f4abcb-ea31-40d3-88fc-9329bbce34e5")
 	)
 	(junction
 		(at 92.71 96.52)
@@ -11595,7 +11776,7 @@
 	)
 	(wire
 		(pts
-			(xy 104.14 101.6) (xy 107.95 101.6)
+			(xy 104.14 101.6) (xy 106.68 101.6)
 		)
 		(stroke
 			(width 0)
@@ -13272,6 +13453,16 @@
 			(type default)
 		)
 		(uuid "b4a1fcf3-f006-4058-9727-c84772a2165a")
+	)
+	(wire
+		(pts
+			(xy 106.68 101.6) (xy 107.95 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b509b00d-ef07-49bd-bc1d-73f84815a946")
 	)
 	(wire
 		(pts
@@ -16643,6 +16834,84 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint_Alt")
+		(at 106.68 101.6 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0cc88336-e7c5-4aba-be18-b9893771d840")
+		(property "Reference" "TP4"
+			(at 105.664 94.488 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "30v"
+			(at 105.664 96.266 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm"
+			(at 111.76 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 111.76 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point (alternative shape)"
+			(at 106.68 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "99ee978b-76ef-49c1-afb0-a0d134c4b17d")
+		)
+		(instances
+			(project "VFD_IV6"
+				(path "/098fcf4c-f67c-4aff-b2c0-93c692070d55"
+					(reference "TP4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Transistor_Array:TBD62783A")
 		(at 358.14 35.56 0)
 		(unit 1)
@@ -17661,6 +17930,84 @@
 			(project "VFD_IV6"
 				(path "/098fcf4c-f67c-4aff-b2c0-93c692070d55"
 					(reference "C9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Alt")
+		(at 68.58 205.74 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "1ba8f627-5f4c-4b53-89cf-248c80667830")
+		(property "Reference" "TP1"
+			(at 67.564 198.628 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "3V3"
+			(at 67.564 200.406 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm"
+			(at 73.66 205.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 73.66 205.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point (alternative shape)"
+			(at 68.58 205.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1fcdcfe1-a963-418c-ad20-aecaaa2cd7d8")
+		)
+		(instances
+			(project "VFD_IV6"
+				(path "/098fcf4c-f67c-4aff-b2c0-93c692070d55"
+					(reference "TP1")
 					(unit 1)
 				)
 			)
@@ -19565,6 +19912,84 @@
 			(project "VFD_IV6"
 				(path "/098fcf4c-f67c-4aff-b2c0-93c692070d55"
 					(reference "R55")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Alt")
+		(at 27.94 205.74 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "4286e711-5431-42aa-b93b-2ccf9449b40b")
+		(property "Reference" "TP2"
+			(at 26.924 198.628 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "5V"
+			(at 26.924 200.406 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm"
+			(at 33.02 205.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 33.02 205.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point (alternative shape)"
+			(at 27.94 205.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f50a9ffa-6936-4831-807c-32d7b01cf109")
+		)
+		(instances
+			(project "VFD_IV6"
+				(path "/098fcf4c-f67c-4aff-b2c0-93c692070d55"
+					(reference "TP2")
 					(unit 1)
 				)
 			)
@@ -23759,7 +24184,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 35.56 45.72 0)
+		(at 193.04 48.26 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -23770,7 +24195,7 @@
 		(fields_autoplaced yes)
 		(uuid "84005a34-0a3a-4ed8-b800-62bcfdb7545a")
 		(property "Reference" "H3"
-			(at 38.1 44.45 0)
+			(at 195.58 46.99 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -23781,7 +24206,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 38.1 46.99 0)
+			(at 195.58 49.53 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -23792,7 +24217,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5_DIN965_Pad"
-			(at 35.56 45.72 0)
+			(at 193.04 48.26 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23803,7 +24228,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 35.56 45.72 0)
+			(at 193.04 48.26 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23814,7 +24239,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 35.56 45.72 0)
+			(at 193.04 48.26 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25941,7 +26366,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 35.56 39.37 0)
+		(at 193.04 41.91 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -25952,7 +26377,7 @@
 		(fields_autoplaced yes)
 		(uuid "a07f23db-308a-4513-b102-01410ec10557")
 		(property "Reference" "H2"
-			(at 38.1 38.1 0)
+			(at 195.58 40.64 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -25963,7 +26388,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 38.1 40.64 0)
+			(at 195.58 43.18 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -25974,7 +26399,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5_DIN965_Pad"
-			(at 35.56 39.37 0)
+			(at 193.04 41.91 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25985,7 +26410,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 35.56 39.37 0)
+			(at 193.04 41.91 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25996,7 +26421,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 35.56 39.37 0)
+			(at 193.04 41.91 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31743,7 +32168,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 35.56 52.07 0)
+		(at 193.04 54.61 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -31754,7 +32179,7 @@
 		(fields_autoplaced yes)
 		(uuid "e2e7285b-6497-4c21-9dd7-45c46848ae72")
 		(property "Reference" "H4"
-			(at 38.1 50.8 0)
+			(at 195.58 53.34 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -31765,7 +32190,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 38.1 53.34 0)
+			(at 195.58 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -31776,7 +32201,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5_DIN965_Pad"
-			(at 35.56 52.07 0)
+			(at 193.04 54.61 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31787,7 +32212,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 35.56 52.07 0)
+			(at 193.04 54.61 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31798,7 +32223,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 35.56 52.07 0)
+			(at 193.04 54.61 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -32142,6 +32567,84 @@
 			(project "VFD_IV6"
 				(path "/098fcf4c-f67c-4aff-b2c0-93c692070d55"
 					(reference "U10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Alt")
+		(at 116.84 156.21 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e47c826e-3402-4f88-8dfd-1b455c5245c3")
+		(property "Reference" "TP3"
+			(at 115.824 149.098 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1V2"
+			(at 115.824 150.876 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm"
+			(at 121.92 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point (alternative shape)"
+			(at 116.84 156.21 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "aa724548-56dc-4c96-a6fe-015e9329f3bc")
+		)
+		(instances
+			(project "VFD_IV6"
+				(path "/098fcf4c-f67c-4aff-b2c0-93c692070d55"
+					(reference "TP3")
 					(unit 1)
 				)
 			)
@@ -33886,7 +34389,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 35.56 33.02 0)
+		(at 193.04 35.56 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -33897,7 +34400,7 @@
 		(fields_autoplaced yes)
 		(uuid "facecdd8-d6ce-4cad-a46f-20ed6b69b10c")
 		(property "Reference" "H1"
-			(at 38.1 31.75 0)
+			(at 195.58 34.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -33908,7 +34411,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 38.1 34.29 0)
+			(at 195.58 36.83 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -33919,7 +34422,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5_DIN965_Pad"
-			(at 35.56 33.02 0)
+			(at 193.04 35.56 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -33930,7 +34433,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 35.56 33.02 0)
+			(at 193.04 35.56 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -33941,7 +34444,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 35.56 33.02 0)
+			(at 193.04 35.56 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
