@@ -21,5 +21,5 @@ The unused MCU pins are accessible via two 2.54 headers and can be used for an a
 + [Fabrication files]
 
 ## Firmware
-The last binary is [HERE](releases)
+The last binary is [HERE](https://github.com/nerovny/IV-6-VFD-Clock/releases)
 Made with VSCode + PlatformIO using some HAL drivers. Source code is provided: just clone the repo and open the project with PIO VSCode plugin.
