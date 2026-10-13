@@ -22,9 +22,10 @@ The unused MCU pins and 5v, 3v3 power rails are accessible via the 2.54mm header
 
 ## Hardware
 The 110x54mm 4-layer board is tight, but definitely doable by hand with the good iron. The road is mastered by the one who walks it.
++ [Schematic PDF](hardware/schematic.pdf)
 + [Interactive BOM HTML](http://htmlpreview.github.io/?https://github.com/nerovny/IV-6-VFD-Clock/blob/main/hardware/bom/ibom.html)
 + [Board dimensions](hardware/VFD_IV6_dimensions.png)
-+ [Fabrication files]
++ [Fabrication files](hardware/Gerber/)
 
 ## Firmware
 The latest binary is [HERE](https://github.com/nerovny/IV-6-VFD-Clock/releases)
